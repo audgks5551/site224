@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ product.display_name }}</h2>
+    <h4>문의사항을 적어주세요</h2>
+    <form method="post" class="post-form my-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">보내기</button>
+    </form>
+</div>
+{% endblock %}
