@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+{% if product %}
+    <h2>이름: {{ product.display_name }}</h2>
+    <h2>가격: {{ product.price }}</h2>
+    <h2>할인가격: {{ product.sale_price }}</h2>
+    <h2>조회수: {{ product.hit_count }}</h2>
+    <h2>리뷰수: {{ product.review_count }}</h2>
+    <h2>리뷰평점: {{ product.review_point }}</h2>
+{% else %}
+    <h2>등록된 게시물이 아닙니다.</h2>
+{% endif %}
+
+{% endblock %}

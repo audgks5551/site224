@@ -4,11 +4,11 @@
 {% if product_list %}
     <ul>
     {% for product in product_list %}
-        <li><a href="#">{{ product.display_name }}</a></li>
+        <li><a href="{% url 'products:detail' product.id %}">{{ product.display_name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>질문이 없습니다.</p>
+    <p>게시글이 없습니다.</p>
 {% endif %}
 
 {% endblock %}

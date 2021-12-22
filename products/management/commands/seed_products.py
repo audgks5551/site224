@@ -1,6 +1,5 @@
 from random import random
 from django.core.management.base import BaseCommand
-import markets
 from products.models import Product, ProductReal
 from markets.models import Market
 import random
