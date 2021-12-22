@@ -27,25 +27,30 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 # Application definition
+LOCAL_APPS = [
+    'accounts.apps.AccountsConfig',
+    'cart.apps.CartConfig',
+    'markets.apps.MarketsConfig',
+    'questions.apps.QuestionsConfig',
+    'products.apps.ProductsConfig',
+]
 
-INSTALLED_APPS = [
+THIRD_PARTY = [
+    'django_bootstrap5',
+    'debug_toolbar',
+    'django_seed',
+]
+
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 서드파티
-    'django_bootstrap5',
-    'debug_toolbar',
-    # 로컬
-    'accounts.apps.AccountsConfig',
-    'cart.apps.CartConfig',
-    'markets.apps.MarketsConfig',
-    'questions.apps.QuestionsConfig',
-    'products.apps.ProductsConfig',
-
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY + LOCAL_APPS
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -92,7 +97,8 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",  # 추가, 만약에 이 부분 때문에 오류가 난다면, 이 라인을 지우고 다시 시도해주세요.
+            # 추가, 만약에 이 부분 때문에 오류가 난다면, 이 라인을 지우고 다시 시도해주세요.
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     }
 }
