@@ -9,6 +9,15 @@
     <h2>리뷰수: {{ product.review_count }}</h2>
     <h2>리뷰평점: {{ product.review_point }}</h2>
     <a href="{% url 'products:questions:create' product.id %}" class="btn btn-primary">문의하기</a>
+    {% if question_list %}
+        <div>
+            <ul>
+            {% for question in question_list %}
+                <li>{{ question.body }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 {% else %}
     <h2>등록된 게시물이 아닙니다.</h2>
 {% endif %}

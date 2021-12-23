@@ -1,5 +1,7 @@
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render
 from products.models import Product
+from questions.models import Question
 
 
 def getProductList(request):
@@ -13,6 +15,7 @@ def getProductList(request):
 def getProductDetail(request, product_id):
 
     product = Product.objects.get(id=product_id)
-    context = {'product': product}
+    question_list = Question.objects.filter(object_id=product_id)
+    context = {'product': product, 'question_list': question_list}
 
     return render(request, 'product_detail.html', context)
