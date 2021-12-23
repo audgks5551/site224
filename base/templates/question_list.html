@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% if question_list %}
+    <ul>
+    {% for question in question_list%}
+        <li>{{ question.body }}</li>
+        <li>{{ question.object_id }}</li>
+        
+        {% if forloop.counter == question_count %}
+        <div class="container">
+            <h2>수정해주세요</h2>
+            <form method="post" class="post-form my-3">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">수정완료</button>
+            </form>
+        {% else%}
+        <div class="my-3">
+            <a href="{% url 'products:questions:modify' product_id forloop.counter %}" 
+               class="btn btn-sm btn-outline-secondary">수정</a>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>게시글이 없습니다.</p>
+{% endif %}
+
+{% endblock %}

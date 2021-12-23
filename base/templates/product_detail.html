@@ -9,6 +9,7 @@
     <h2>리뷰수: {{ product.review_count }}</h2>
     <h2>리뷰평점: {{ product.review_point }}</h2>
     <a href="{% url 'products:questions:create' product.id %}" class="btn btn-primary">문의하기</a>
+    <a href="{% url 'products:questions:show' product.id %}" class="btn btn-primary">내 문의보기</a>
     {% if question_list %}
         <div>
             <ul>

@@ -1,7 +1,9 @@
 from django.contrib import auth
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import render, redirect
+from django.http.response import HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from products.models import Product
+from questions.models import Question
 from .froms import QuestionForm
 from accounts.models import User
 # Create your views here.
@@ -26,3 +28,27 @@ def createQuestion(request, product_id):
     form = QuestionForm()
     context = {'form': form, 'product': product}
     return render(request, 'question_create.html', context)
+
+def showQuestion(request, product_id):
+
+    question_list = Question.objects.filter(object_id=product_id, user=User.objects.last())
+    context = {'question_list': question_list, 'product_id': product_id}
+    return render(request, 'question_list.html', context)
+
+
+def modifyQuestion(request, product_id, question_count):
+
+    question_list = Question.objects.filter(object_id=product_id, user=User.objects.last())
+    question = question_list[question_count-1]
+
+    if request.method == "POST":
+        form = QuestionForm(request.POST, instance=question)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.save()
+            return redirect('products:questions:show', product_id)
+    else:
+        form = QuestionForm(instance=question)
+
+    context = {'question_list': question_list, 'product_id': product_id, 'form': form, 'question_count': question_count}
+    return render(request, 'question_list.html', context)
