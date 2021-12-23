@@ -18,6 +18,8 @@
         <div class="my-3">
             <a href="{% url 'products:questions:modify' product_id forloop.counter %}" 
                class="btn btn-sm btn-outline-secondary">수정</a>
+            <a href="{% url 'products:questions:delete' product_id forloop.counter %}" 
+               class="btn btn-sm btn-outline-secondary">삭제</a>
         </div>
         {% endif %}
     {% endfor %}

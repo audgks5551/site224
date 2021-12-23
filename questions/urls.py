@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.showQuestion, name="show"),
     path('create/', views.createQuestion, name="create"),
     path('<int:question_count>/modify', views.modifyQuestion, name="modify"),
+    path('<int:question_count>/delete', views.deleteQuestion, name="delete"),
 ]

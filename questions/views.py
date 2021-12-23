@@ -52,3 +52,11 @@ def modifyQuestion(request, product_id, question_count):
 
     context = {'question_list': question_list, 'product_id': product_id, 'form': form, 'question_count': question_count}
     return render(request, 'question_list.html', context)
+
+def deleteQuestion(request, product_id, question_count):
+    question_list = Question.objects.filter(object_id=product_id, user=User.objects.last())
+    question = question_list[question_count-1]
+    question.delete()
+
+    return redirect('products:questions:show', product_id)
+
