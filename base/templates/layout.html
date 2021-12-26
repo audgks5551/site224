@@ -13,29 +13,8 @@
 </head>
 
 <body class="t-flex t-flex-col t-min-h-screen t-bg-gray-100 ">
-  
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-<div class="container-fluid">
-  <a class="navbar-brand" href="/">메가 쇼핑</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/">홈</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/products/list">상품리스트</a>
-      </li>
-    </ul>
-    <form class="d-flex">
-      <input class="form-control me-2" type="search" placeholder="상품명을 입력해주세요." aria-label="Search">
-      <button class="btn btn-outline-success t-whitespace-nowrap" type="submit">검색</button>
-    </form>
-  </div>
-</div>
-</nav>
+
+{% include 'nav.html' %}
 
 {% if messages %}
 {% for message in messages %}
@@ -50,10 +29,7 @@
     {% endblock %}
 </div>
 
-<footer class="footer py-3 bg-light">
-    <div class="container t-text-center">
-      <span class="text-muted">copyrightⓒ 2021 All rights reserved</span>
-    </div>
-  </footer>
+{% include 'footer.html' %}
+
 </body>
 </html>

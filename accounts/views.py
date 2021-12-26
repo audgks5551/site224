@@ -14,6 +14,7 @@ def signup(request):
             messages.success(request, "회원가입 환영합니다.")
             # signed_user.send_welcome_email()  # FIXME: Celery로 처리하는 것을 추천.
             next_url = request.GET.get('next', '/')
+            print(request.GET.get('next', '/'))
             return redirect(next_url)
     else:
         form = SignupForm()
