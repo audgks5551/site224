@@ -1,0 +1,107 @@
+version: '3'
+
+services:
+  web:
+    build: ./django/
+    container_name: django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./source:/code
+    ports:
+      - "8000:8000"
+    environment:
+      MYSQL_DATABASE: site224
+      MYSQL_USER: sbsst
+      MYSQL_PASSWORD: sbs123414
+      MYSQL_ROOT_PASSWORD: sbs123414
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.6.5
+    container_name: mariadb
+    environment:
+      MYSQL_DATABASE: site224
+      MYSQL_USER: sbsst
+      MYSQL_PASSWORD: sbs123414
+      MYSQL_ROOT_PASSWORD: sbs123414
+    volumes:
+      - ./docker/data:/var/lib/mysql
+
+  adminer:
+    image: adminer:4.8.1
+    container_name: adminer
+    ports:
+      - 8080:8080
+
+  es01:
+    build: ./elasticsearch/
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+
+  es02:
+    build: ./elasticsearch/
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  es03:
+    build: ./elasticsearch/
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  kibana:
+    image: kibana:7.14.2
+    container_name: kibana
+    environment:
+      SERVER_NAME: kibana
+      SERVER.HOST: "0.0.0.0"
+      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
+    ports:
+      - "5601:5601"
+    depends_on:
+      - db
+
+  logstash:
+    build: ./logstash/
+    container_name: logstash
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,z
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,z
+      - ./drivers/:/opt/logstash/vendor/jar/jdbc/
+    environment:
+      - "LS_JAVA_OPTS=-Xmx256m -Xms256m"
+    depends_on:
+      - db
+      - es01
