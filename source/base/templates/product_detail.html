@@ -51,10 +51,16 @@
     </div>
     
     <div class="card t-mt-[30px]">
-        <div class="card-header t-flex t-items-center">
+        <div class="card-header t-flex">
             <h2 class="t-mr-[10px]">상품 문의하기</h2>
-            <a class="badge bg-primary t-mr-[10px] t-no-underline" href="{% url 'products:questions:create' product.id %}">문의하기</a>
-            <a class="badge bg-primary t-mr-[10px] t-no-underline" href="{% url 'products:questions:show' product.id %}">내 문의보기</a>
+            <a class="badge bg-primary t-no-underline t-mr-[10px]" 
+                href="{% url 'products:questions:create' product.id %}">
+                문의하기
+            </a>
+                <a class="badge bg-primary t-no-underline t-mr-[10px]"
+                href="{% url 'products:questions:show' product.id %}">
+                 내 문의보기
+            </a>  
         </div>
         <ul class="list-group list-group-flush">
             {% for question in question_list %}

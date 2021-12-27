@@ -6,13 +6,10 @@ from elasticsearch7 import Elasticsearch
 
 # 제품 리스트 보기
 
-client = Elasticsearch("http://es01:9200")
-
 
 def getProductList(request):
 
     search = request.GET.get("search", "")
-    print(client.info())
     if search != "":
         pass
 

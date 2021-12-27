@@ -1,27 +1,10 @@
 {% extends "accounts/layout.html" %}
-
 {% block content %}
-<div>
-    <form method="post" action="{% url 'accounts:login' %}">
-        {% csrf_token %}
-        {% include 'form_errors.html' %}
-        <div>
-            <label for="username">사용자 ID</label>
-            <input 
-                type="text"
-                name="username"
-                id="username"
-                value="{{ form.username.value|default_if_none:'' }}">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            {% include "_form.html" with form_title="로그인" submit_label="로그인" %}
         </div>
-        <div>
-            <label for="password">비밀번호</label>
-            <input 
-                type="password"
-                name="password"
-                id="password"
-                value="{{ form.password.value|default_if_none:'' }}">
-        </div>
-        <button type="submit">로그인</button>
-    </form>
+    </div>
 </div>
 {% endblock %}

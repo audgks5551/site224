@@ -1,13 +1,58 @@
 {% extends 'layout.html' %}
-{% load django_bootstrap5 %}
 {% block content %}
-<div class="container">
-    <h2>{{ product.display_name }}</h2>
-    <h4>문의사항을 적어주세요</h2>
-    <form method="post">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <button type="submit" class="btn btn-primary">보내기</button>
-    </form>
-</div>
+{% load humanize %}
+{% load django_bootstrap5 %}
+<section class="section-prod-detail t-mb-[10px]">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                판매자에게 문의하기
+            </div>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    상품명 : <span class="t-font-bold">{{product.display_name}}</span>
+                </li>
+                <li class="list-group-item">
+                    가격 : <span class="t-font-bold">{{product.sale_price|intcomma}}</span>원
+                </li>
+                <li class="list-group-item">
+                    마켓 : <span class="badge bg-primary">{{product.market.name}}</span>
+                </li>
+            </ul>
+
+    </div>
+    <div class="card t-mt-[30px]">
+        <div class="card-header">
+            옵션
+        </div>
+
+        <ul class="list-group list-group-flush">
+            {% for product_real in product_reals %}
+            <li class="list-group-item">
+                {{product_real.option_1_type}} : <span class="badge bg-secondary">{{product_real.option_1_display_name}}</span>
+                /
+                {{product_real.option_2_type}} : <span class="badge bg-secondary">{{product_real.option_2_display_name}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="container t-mt-[10px]">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <textarea name="body" 
+                            cols="40" 
+                            rows="5" 
+                            class="form-control" 
+                            placeholder="내용" 
+                            required id="id_body
+                "></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">확인</button>
+            <a href="{% url 'products:detail' product.id %}" class="btn btn-primary">취소</a>
+        </form>
+    </div>
+</section>
+
 {% endblock %}
