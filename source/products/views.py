@@ -35,12 +35,18 @@ def getProductDetail(request, product_id):
 def exampleElasticsearch(request):
     search_keyword = request.GET.get("search" "")
     elasticsearch = Elasticsearch("http://es01:9200")
-    pp(elasticsearch.sql.query(body={'query': f"""
-            SELECT score(), name 
+    keyword_list = elasticsearch.sql.query(body={'query': f"""
+            SELECT id 
             FROM "article"
             WHERE MATCH(name, '{search_keyword}') 
             ORDER BY score() DESC
-            """}))
+            """})
+    GHList = []
+    #for hit in keyword_list['rows']['rows']:
+    #        GHList.append(hit['_source']['name'])
+    
+    #for item in GHList:
+    #    print(item)
     if search_keyword != "":
         #res = elasticsearch.query(
         #    f"""
