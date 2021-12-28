@@ -26,7 +26,7 @@
           {% endif %}
         </ul>
         <div>
-          <form method="get" class="d-flex" action="{% url 'products:list' %}">
+          <form method="get" class="d-flex" action="{% url 'products:elasticsearch' %}">
             <input name="search" class="form-control me-2" type="search" placeholder="상품명을 입력해주세요." aria-label="Search">
             <button class="btn btn-outline-success t-whitespace-nowrap" type="submit">검색</button>
           </form>

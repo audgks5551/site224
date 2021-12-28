@@ -3,7 +3,8 @@ from django.shortcuts import render
 from products.models import Product, ProductReal
 from questions.models import Question
 from elasticsearch7 import Elasticsearch
-
+from elasticsearch7.client import SqlClient
+from pprint import pprint as pp
 # 제품 리스트 보기
 
 
@@ -30,3 +31,25 @@ def getProductDetail(request, product_id):
                'product_reals': product_reals}
 
     return render(request, 'product_detail.html', context)
+
+def exampleElasticsearch(request):
+    search_keyword = request.GET.get("search" "")
+    elasticsearch = Elasticsearch("http://es01:9200")
+    pp(elasticsearch.sql.query(body={'query': f"""
+            SELECT score(), name 
+            FROM "article"
+            WHERE MATCH(name, '{search_keyword}') 
+            ORDER BY score() DESC
+            """}))
+    if search_keyword != "":
+        #res = elasticsearch.query(
+        #    f"""
+        #    SELECT score(), name 
+        #    FROM "article"
+        #    WHERE MATCH(name, '{search_keyword}') 
+        #    ORDER BY score() DESC
+        #    """
+        #)
+        pass
+    context = {}
+    return render(request, 'example.html', context)
