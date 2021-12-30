@@ -33,48 +33,6 @@ def getProductDetail(request, product_id):
     return render(request, 'product_detail.html', context)
 
 
-def exampleElasticsearch(request):
-    search_keyword = request.GET.get("search" "")
-    elasticsearch = Elasticsearch("http://es01:9200")
-    keyword_list = elasticsearch.sql.query(body={
-        "query": f"""
-        SELECT id, name, price
-        FROM article
-        WHERE MATCH(name, '{search_keyword}')
-        ORDER BY score() DESC
-        """,
-        "fetch_size": 10
-    })
-    print(keyword_list)
-    print(keyword_list['rows'])
-    print("======================================")
-    cursor = keyword_list['cursor']
-    paging = elasticsearch.sql.query(body={
-        "cursor": f"{cursor}"
-    })
-    print(paging['rows'])
-    print(cursor == paging['cursor'])
-
-    GHList = []
-    # for hit in keyword_list['rows']['rows']:
-    #        GHList.append(hit['_source']['name'])
-
-    # for item in GHList:
-    #    print(item)
-    if search_keyword != "":
-        # res = elasticsearch.query(
-        #    f"""
-        #    SELECT score(), name
-        #    FROM "article"
-        #    WHERE MATCH(name, '{search_keyword}')
-        #    ORDER BY score() DESC
-        #    """
-        # )
-        pass
-    context = {}
-    return render(request, 'example.html', context)
-
-
 def exampleElasticsearchv(request):
     search_keyword = request.GET.get("search" "")
     elasticsearch = Elasticsearch("http://es01:9200")

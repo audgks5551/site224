@@ -9,5 +9,4 @@ urlpatterns = [
         path('question/', include('questions.urls')),
     ])),
     path('list/', views.getProductList, name="list"),
-    path('example/', views.exampleElasticsearchv, name="elasticsearch"),
 ]
